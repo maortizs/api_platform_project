@@ -15,9 +15,11 @@ RUN apt-get update \
     pdo \
     pdo_pgsql \
     zip \
+&& php -m | grep pdo_pgsql || (echo "pdo_pgsql NO cargado" && exit 1) \
  # 4) Limpiamos caches de apt para reducir la superficie
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
+
 
 # 5) Traemos Composer desde su imagen oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
